@@ -46,4 +46,54 @@ public class InlineKeyboardsMarkupStorage {
 
         return replyKeyboardMarkup;
     }
+
+    public static InlineKeyboardMarkup GetInlineKeyboardMarkupMenuMainStylesFilm() {
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+        List<InlineKeyboardButton> row;
+        InlineKeyboardButton button;
+
+        row = new ArrayList<>();
+        button = new InlineKeyboardButton();
+        button.setText(ButtonsStorage.ButtonStylesFilmsFromMenuMainHorrors.getName());
+        button.setCallbackData(ButtonsStorage.ButtonStylesFilmsFromMenuMainHorrors.getCallBackData());
+        row.add(button);
+        keyboard.add(row);
+
+        row = new ArrayList<>();
+        button = new InlineKeyboardButton();
+        button.setText(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getName());
+        button.setCallbackData(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getCallBackData());
+        row.add(button);
+        keyboard.add(row);
+
+        row = new ArrayList<>();
+        button = new InlineKeyboardButton();
+        button.setText(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getName());
+        button.setCallbackData(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getCallBackData());
+        row.add(button);
+        keyboard.add(row);
+
+
+        row = new ArrayList<>();
+        button = new InlineKeyboardButton();
+        button.setText(ButtonsStorage.ButtonStylesFilmsFromMenuMainComedy.getName());
+        button.setCallbackData(ButtonsStorage.ButtonStylesFilmsFromMenuMainComedy.getCallBackData());
+        row.add(button);
+        keyboard.add(row);
+
+
+        row = new ArrayList<>();
+        button = new InlineKeyboardButton();
+        button.setText(ButtonsStorage.ButtonStylesFilmsFromMenuMainMilitary.getName());
+        button.setCallbackData(ButtonsStorage.ButtonStylesFilmsFromMenuMainMilitary.getCallBackData());
+        row.add(button);
+        keyboard.add(row);
+
+
+        InlineKeyboardMarkup replyKeyboardMarkup = new InlineKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboard);
+
+        return replyKeyboardMarkup;
+    }
 }

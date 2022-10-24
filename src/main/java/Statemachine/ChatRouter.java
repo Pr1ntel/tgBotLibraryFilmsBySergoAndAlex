@@ -1,29 +1,36 @@
 package Statemachine;
 
 import Service.ServiceManager;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import Util.SystemStringsStorage;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChatRouter {
-    private Map<Long, TransmittedData> chats;
-    private ServiceManager serviceManager;
 
-    public ChatRouter() {
-        chats = new HashMap<>();
-       serviceManager = new ServiceManager();
-    }
 
-    public void route(long chatId, Update update, TelegramLongPollingBot bot) throws TelegramApiException {
-        if (!chats.containsKey(chatId)) {
-            chats.put(chatId, new TransmittedData());
+        private Map<Long,TransmittedData> chats;
+        private ServiceManager serviceManager;
+
+        public ChatRouter() {
+            chats = new HashMap<>();
+            serviceManager = new ServiceManager();
         }
 
-        TransmittedData transmittedData = chats.get(chatId);
+        public SendMessage route(long chatId, String textData) throws Exception {
 
-        serviceManager.processUpdate(chatId, transmittedData, update, bot);
-    }
+            if(!chats.containsKey(chatId)){
+                chats.put(chatId,new TransmittedData(chatId));
+            }
+
+            TransmittedData transmittedData = chats.get(chatId);
+
+            if(textData.equals(SystemStringsStorage.CommandReset) && transmittedData.getState() != State.WaitingCommandStart){
+                return serviceManager.getStaticService().processCommandReset(transmittedData);
+            }
+
+            return serviceManager.processUpdate(textData, transmittedData);
+        }
 }

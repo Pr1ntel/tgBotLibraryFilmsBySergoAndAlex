@@ -2,6 +2,7 @@ package Service.Handlers;
 
 import Model.DbManager;
 import Model.Entities.Films;
+import Model.Entities.StyleFilms;
 import Statemachine.State;
 import Statemachine.TransmittedData;
 import Util.ButtonsStorage;
@@ -39,21 +40,37 @@ public class MainMenuService {
         message.setChatId(transmittedData.getChatId());
 
         if (callBackData.equals(ButtonsStorage.ButtonAllFilmsInMenuMain.getCallBackData())) {
-            List < Films> films = DbManager.getInstance().getTableFilms().getAllByChatId(transmittedData.getChatId());
+            message.setText(DialogStringsStorage.CommandMenuStyleFilms);
+            message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMainStylesFilm());
 
-            // остановился
-            return message;
-        }else if(callBackData.equals(ButtonsStorage.ButtonAddFilmsInMenuMain.getCallBackData())){
-            message.setText("Вы нажали добавить фильм");
-            return message;
-        }else if(callBackData.equals(ButtonsStorage.ButtonDeleteFilmsInMenuMain.getCallBackData())){
-            message.setText("Вы нажали удалить фильм");
-            return message;
-        }else if(callBackData.equals(ButtonsStorage.ButtonFindFilmsInMenuMain.getCallBackData())){
-            message.setText("Вы нажали поиск фильма");
-            return message;
+
+
+           /* List<Films> film = DbManager.getInstance().getTableFilms().getAllByChatId(transmittedData.getChatId());
+                message.setText(DialogStringsStorage.CommandMenuStyleFilms);
+                List<StyleFilms> styleFilm = DbManager.getInstance().getTableStyleFilms().getAll();
+               film.stream().forEach(
+                       films -> films.setStyleFilms(
+                               styleFilm.stream()
+                                       .filter(styleFilms -> styleFilms.getId()==films.getStyleFilmToId()).findFirst().get()
+                       )
+               );
+        message.setText(DialogStringsStorage.CommandMenuStyleFilms);
+        message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMainStylesFilm(film));*/
+
+                // остановился
+                return message;
+            } else if (callBackData.equals(ButtonsStorage.ButtonAddFilmsInMenuMain.getCallBackData())) {
+                message.setText("Вы нажали добавить фильм");
+                return message;
+            } else if (callBackData.equals(ButtonsStorage.ButtonDeleteFilmsInMenuMain.getCallBackData())) {
+                message.setText("Вы нажали удалить фильм");
+                return message;
+            } else if (callBackData.equals(ButtonsStorage.ButtonFindFilmsInMenuMain.getCallBackData())) {
+                message.setText("Вы нажали поиск фильма");
+                return message;
+            }
+
+            throw new Exception("Неправильный ввод");
         }
-
-        throw new Exception("Неправильный ввод");
     }
-}
+

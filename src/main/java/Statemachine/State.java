@@ -4,7 +4,7 @@ public enum State {
     WaitingCommandStart,
     WaitingClickOnInlineButtonInMenuMain,
     WaitingClickOnInlineButtonInMenuChooseFilm,
-    WaitingInputStartFromMenu,
+    WaitingInputStartFromMenuChooseFilm,
     WaitingClickOnInlineButtonInMenuAddFilm,
     WaitingClickOnInlineButtonInMenuDeleteFilm,
     WaitingClickOnInlineButtonInMenuChooseFromDeleteFilm,

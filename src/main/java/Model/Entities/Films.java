@@ -9,7 +9,6 @@ public class Films {
     private int releaseFilm;
     private int styleFilmToId;
 
-    private StyleFilms styleFilms;
 
     public Films(int id,long chatId, String name, int timeLength, String linkFilm, int releaseFilm, int styleFilmToId) {
         this.id = id;
@@ -19,7 +18,7 @@ public class Films {
         this.linkFilm = linkFilm;
         this.releaseFilm = releaseFilm;
         this.styleFilmToId = styleFilmToId;
-        this.styleFilms = null;
+
     }
 
     public Films(long chatId, String name){
@@ -55,7 +54,5 @@ public class Films {
         return chatId;
     }
 
-    public void setStyleFilms(StyleFilms styleFilms) {
-        this.styleFilms = styleFilms;
-    }
+
 }

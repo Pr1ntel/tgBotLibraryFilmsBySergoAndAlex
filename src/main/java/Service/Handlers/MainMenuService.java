@@ -1,8 +1,6 @@
 package Service.Handlers;
 
-import Model.DbManager;
-import Model.Entities.Films;
-import Model.Entities.StyleFilms;
+
 import Statemachine.State;
 import Statemachine.TransmittedData;
 import Util.ButtonsStorage;
@@ -11,7 +9,8 @@ import Util.InlineKeyboardsMarkupStorage;
 import Util.SystemStringsStorage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-import java.util.List;
+
+import static Statemachine.State.WaitingInputStartFromMenuChooseFilm;
 
 
 public class MainMenuService {
@@ -43,34 +42,47 @@ public class MainMenuService {
             message.setText(DialogStringsStorage.CommandMenuStyleFilms);
             message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMainStylesFilm());
 
+            transmittedData.setState(WaitingInputStartFromMenuChooseFilm);
+
+            // остановился
+            return message;
 
 
-           /* List<Films> film = DbManager.getInstance().getTableFilms().getAllByChatId(transmittedData.getChatId());
-                message.setText(DialogStringsStorage.CommandMenuStyleFilms);
-                List<StyleFilms> styleFilm = DbManager.getInstance().getTableStyleFilms().getAll();
-               film.stream().forEach(
-                       films -> films.setStyleFilms(
-                               styleFilm.stream()
-                                       .filter(styleFilms -> styleFilms.getId()==films.getStyleFilmToId()).findFirst().get()
-                       )
-               );
-        message.setText(DialogStringsStorage.CommandMenuStyleFilms);
-        message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMainStylesFilm(film));*/
-
-                // остановился
-                return message;
-            } else if (callBackData.equals(ButtonsStorage.ButtonAddFilmsInMenuMain.getCallBackData())) {
-                message.setText("Вы нажали добавить фильм");
-                return message;
-            } else if (callBackData.equals(ButtonsStorage.ButtonDeleteFilmsInMenuMain.getCallBackData())) {
-                message.setText("Вы нажали удалить фильм");
-                return message;
-            } else if (callBackData.equals(ButtonsStorage.ButtonFindFilmsInMenuMain.getCallBackData())) {
-                message.setText("Вы нажали поиск фильма");
-                return message;
-            }
-
-            throw new Exception("Неправильный ввод");
+        } else if (callBackData.equals(ButtonsStorage.ButtonAddFilmsInMenuMain.getCallBackData())) {
+            message.setText("Вы нажали добавить фильм");
+            return message;
+        } else if (callBackData.equals(ButtonsStorage.ButtonDeleteFilmsInMenuMain.getCallBackData())) {
+            message.setText("Вы нажали удалить фильм");
+            return message;
+        } else if (callBackData.equals(ButtonsStorage.ButtonFindFilmsInMenuMain.getCallBackData())) {
+            message.setText("Вы нажали поиск фильма");
+            return message;
         }
+
+        throw new Exception("Неправильный ввод");
     }
+
+    public SendMessage processClickOnInlineButtonStylesFilms(String callBackData, TransmittedData transmittedData) throws Exception {
+        SendMessage message = new SendMessage();
+        message.setChatId(transmittedData.getChatId());
+        if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHorrors.getCallBackData())) {
+            message.setText("Вы нажали на ужасы");
+            return message;
+
+        } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getCallBackData())) {
+            message.setText("Вы нажали на мистика");
+            return message;
+        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getCallBackData())) {
+            message.setText("Вы нажали на исторические");
+            return message;
+        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainComedy.getCallBackData())) {
+            message.setText("Вы нажали на комедии");
+            return message;
+        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMilitary.getCallBackData())) {
+            message.setText("Вы нажали на боевики");
+            return message;
+        }
+        throw new Exception("Ввод говно");
+    }
+}
 

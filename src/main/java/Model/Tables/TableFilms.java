@@ -80,4 +80,23 @@ public class TableFilms {
 
         return films;
     }
+
+    public List<Films> getAllHorror() throws SQLException {
+        List<Films> films = new ArrayList<>();
+        Statement statement = connection.createStatement();
+
+        String selectQuery = String.format("SELECT * FROM films WHERE style_film_id = 1");
+        ResultSet resultSet = statement.executeQuery(selectQuery);
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            int timeLength = resultSet.getInt("time_length");
+            String linkFilm = resultSet.getString("link_film");
+            int releaseFilm = resultSet.getInt("release_year");
+
+            films.add(new Films(name, timeLength, linkFilm, releaseFilm));
+        }
+        resultSet.close();
+        statement.close();
+        return films;
+    }
 }

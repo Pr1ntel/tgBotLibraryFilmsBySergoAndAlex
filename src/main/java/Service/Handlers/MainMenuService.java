@@ -1,6 +1,6 @@
 package Service.Handlers;
 
-
+import Model.DbManager;
 import Statemachine.State;
 import Statemachine.TransmittedData;
 import Util.ButtonsStorage;
@@ -8,12 +8,16 @@ import Util.DialogStringsStorage;
 import Util.InlineKeyboardsMarkupStorage;
 import Util.SystemStringsStorage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import Model.Tables.TableFilms;
 
 
+import static Statemachine.State.WaitingInputStartFromMenu;
 import static Statemachine.State.WaitingInputStartFromMenuChooseFilm;
 
 
 public class MainMenuService {
+    private TableFilms tableFilms;
+
     public SendMessage processCommandStart(String command, TransmittedData transmittedData) {
 
         SendMessage message = new SendMessage();
@@ -44,9 +48,7 @@ public class MainMenuService {
 
             transmittedData.setState(WaitingInputStartFromMenuChooseFilm);
 
-            // остановился
             return message;
-
 
         } else if (callBackData.equals(ButtonsStorage.ButtonAddFilmsInMenuMain.getCallBackData())) {
             message.setText("Вы нажали добавить фильм");
@@ -66,19 +68,21 @@ public class MainMenuService {
         SendMessage message = new SendMessage();
         message.setChatId(transmittedData.getChatId());
         if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHorrors.getCallBackData())) {
-            message.setText("Вы нажали на ужасы");
+            message.setText(DialogStringsStorage.CommandStyleFilmsHorror);
+            DbManager.getInstance().getTableFilms().getAllHorror();
+            transmittedData.setState(WaitingInputStartFromMenu);
             return message;
 
         } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getCallBackData())) {
             message.setText("Вы нажали на мистика");
             return message;
-        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getCallBackData())) {
+        } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getCallBackData())) {
             message.setText("Вы нажали на исторические");
             return message;
-        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainComedy.getCallBackData())) {
+        } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainComedy.getCallBackData())) {
             message.setText("Вы нажали на комедии");
             return message;
-        }else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMilitary.getCallBackData())) {
+        } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMilitary.getCallBackData())) {
             message.setText("Вы нажали на боевики");
             return message;
         }

@@ -1,6 +1,8 @@
 package Model.Tables;
 
+import Model.Entities.Films;
 import Model.Entities.StyleFilms;
+import Statemachine.State;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -38,4 +40,23 @@ public class TableStyleFilms {
 
         return styleFilms;
     }
+
+    /*public List<Films> getAllHorror() throws SQLException {
+        List<Films> films = new ArrayList<>();
+        Statement statement = connection.createStatement();
+
+        String selectQuery = String.format("SELECT * FROM films WHERE style_film_id = 1");
+        ResultSet resultSet = statement.executeQuery(selectQuery);
+        while (resultSet.next()) {
+         String name = resultSet.getString("name");
+         int timeLength = resultSet.getInt("time_length");
+         String linkFilm = resultSet.getString("link_film");
+         int releaseFilm = resultSet.getInt("release_year");
+        films.add(new Films(name,timeLength,linkFilm,releaseFilm));
+        }
+        resultSet.close();
+        statement.close();
+        return films;
+    }*/
+    //не нужно в tableFilms лежит
 }

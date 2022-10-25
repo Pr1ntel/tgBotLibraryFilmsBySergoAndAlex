@@ -26,6 +26,13 @@ public class Films {
         this.name = name;
     }
 
+    public Films(String name, int timeLength, String linkFilm, int releaseFilm) {
+        this.name = name;
+        this.timeLength = timeLength;
+        this.linkFilm = linkFilm;
+        this.releaseFilm = releaseFilm;
+    }
+
     public int getId() {
         return id;
     }

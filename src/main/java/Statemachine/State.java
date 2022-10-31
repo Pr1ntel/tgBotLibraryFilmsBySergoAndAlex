@@ -4,10 +4,18 @@ public enum State {
     WaitingCommandStart,
     WaitingClickOnInlineButtonInMenuMain,
     WaitingClickOnInlineButtonInMenuChooseFilm,
-    WaitingInputStartFromMenuChooseFilm,
     WaitingInputStartFromMenu,
     WaitingClickOnInlineButtonInMenuAddFilm,
     WaitingClickOnInlineButtonInMenuDeleteFilm,
     WaitingClickOnInlineButtonInMenuChooseFromDeleteFilm,
-    WaitingClickOnInlineButtonInMenuFindFilm
+    WaitingClickOnInlineButtonInMenuFindFilm,
+
+    // states from add films
+
+    WaitingInputName,
+    WaitingInputTimeLength,
+    WaitingInputLinkFilm,
+    WaitingInputYearRelease,
+    WaitingInputStyleFilm
+
 }

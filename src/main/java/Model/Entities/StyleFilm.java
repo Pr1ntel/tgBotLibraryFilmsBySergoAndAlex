@@ -1,10 +1,10 @@
 package Model.Entities;
 
-public class StyleFilms {
+public class StyleFilm {
     private int id;
     private String styleFilm;
 
-    public StyleFilms(int id, String styleFilm) {
+    public StyleFilm(int id, String styleFilm) {
         this.id = id;
         this.styleFilm = styleFilm;
     }

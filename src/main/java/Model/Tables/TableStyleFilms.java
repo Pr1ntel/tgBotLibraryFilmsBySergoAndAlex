@@ -1,8 +1,6 @@
 package Model.Tables;
 
-import Model.Entities.Films;
-import Model.Entities.StyleFilms;
-import Statemachine.State;
+import Model.Entities.StyleFilm;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,8 +16,8 @@ public class TableStyleFilms {
         this.connection = connection;
     }
 
-    public List<StyleFilms> getAll() throws SQLException {
-        List<StyleFilms> styleFilms = new ArrayList<>();
+    public List<StyleFilm> getAll() throws SQLException {
+        List<StyleFilm> styleFilms = new ArrayList<>();
 
         Statement statement = connection.createStatement();
 
@@ -32,7 +30,7 @@ public class TableStyleFilms {
             int id = resultSet.getInt("id");
             String styleFilm = resultSet.getString("styleFilm");
 
-            styleFilms.add(new StyleFilms(id, styleFilm));
+            styleFilms.add(new StyleFilm(id, styleFilm));
         }
         resultSet.close();
 

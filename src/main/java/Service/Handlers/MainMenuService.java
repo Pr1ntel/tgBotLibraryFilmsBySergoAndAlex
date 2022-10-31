@@ -1,22 +1,24 @@
 package Service.Handlers;
 
 import Model.DbManager;
-import Statemachine.State;
+import Model.Entities.Film;
+import Model.Tables.TableFilms;
 import Statemachine.TransmittedData;
 import Util.ButtonsStorage;
 import Util.DialogStringsStorage;
 import Util.InlineKeyboardsMarkupStorage;
 import Util.SystemStringsStorage;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import Model.Tables.TableFilms;
 
+import java.util.List;
 
-import static Statemachine.State.WaitingInputStartFromMenu;
-import static Statemachine.State.WaitingInputStartFromMenuChooseFilm;
+import static Statemachine.State.*;
 
 
 public class MainMenuService {
     private TableFilms tableFilms;
+    private FilmService filmService;
 
     public SendMessage processCommandStart(String command, TransmittedData transmittedData) {
 
@@ -28,7 +30,7 @@ public class MainMenuService {
             return message;
         }
 
-        transmittedData.setState(State.WaitingClickOnInlineButtonInMenuMain);
+        transmittedData.setState(WaitingClickOnInlineButtonInMenuMain);
 
         message.setText(DialogStringsStorage.CommandStartOK);
         message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMain());
@@ -46,7 +48,7 @@ public class MainMenuService {
             message.setText(DialogStringsStorage.CommandMenuStyleFilms);
             message.setReplyMarkup(InlineKeyboardsMarkupStorage.GetInlineKeyboardMarkupMenuMainStylesFilm());
 
-            transmittedData.setState(WaitingInputStartFromMenuChooseFilm);
+            transmittedData.setState(WaitingClickOnInlineButtonInMenuChooseFilm);
 
             return message;
 
@@ -68,14 +70,36 @@ public class MainMenuService {
         SendMessage message = new SendMessage();
         message.setChatId(transmittedData.getChatId());
         if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHorrors.getCallBackData())) {
-            message.setText(DialogStringsStorage.CommandStyleFilmsHorror);
-            DbManager.getInstance().getTableFilms().getAllHorror();
+            List<Film> filmList = DbManager.getInstance().getTableFilms().getAllHorror();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (Film film : filmList) {
+                stringBuilder.append(film.toString() + "\n");
+            }
+
+            String filmsAsText = stringBuilder.toString();
+
+            message.setText(DialogStringsStorage.CommandStyleFilmsHorror + "\n" + filmsAsText);
             transmittedData.setState(WaitingInputStartFromMenu);
+
             return message;
 
         } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getCallBackData())) {
-            message.setText("Вы нажали на мистика");
-            return message;
+            if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainMystic.getCallBackData())) {
+                List<Film> filmList = DbManager.getInstance().getTableFilms().getAllMystic();
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (Film film : filmList) {
+                    stringBuilder.append(film.toString() + "\n");
+                }
+
+                String filmsAsText = stringBuilder.toString();
+
+                message.setText(DialogStringsStorage.CommandStyleFilmsMystic + "\n" + filmsAsText);
+                transmittedData.setState(WaitingInputStartFromMenu);
+                return message;
+            }
+
         } else if (callBackData.equals(ButtonsStorage.ButtonStylesFilmsFromMenuMainHistory.getCallBackData())) {
             message.setText("Вы нажали на исторические");
             return message;
@@ -86,7 +110,10 @@ public class MainMenuService {
             message.setText("Вы нажали на боевики");
             return message;
         }
+
         throw new Exception("Ввод говно");
     }
+
+
 }
 

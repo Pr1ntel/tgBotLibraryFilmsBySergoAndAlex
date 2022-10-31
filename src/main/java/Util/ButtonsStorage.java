@@ -19,10 +19,10 @@ public class ButtonsStorage {
         }
     }
 
-    public final static Button ButtonAllFilmsInMenuMain = new Button("Список фильмов", "ButtonAllFilmsInMenuMain");
-    public final static Button ButtonAddFilmsInMenuMain = new Button("Добавить фильм", "ButtonAddFilmsInMenuMain");
-    public final static Button ButtonDeleteFilmsInMenuMain = new Button("Удалить фильм", "ButtonDeleteFilmsInMenuMain");
-    public final static Button ButtonFindFilmsInMenuMain = new Button("Поиск фильма", "ButtonFindFilmsInMenuMain");
+    public final static Button ButtonAllFilmsInMenuMain = new Button("Список фильмов", "ButtonMyCardsInMenuMain");
+    public final static Button ButtonAddFilmsInMenuMain = new Button("Добавить фильм", "ButtonTransferMoneyInMenuMain");
+    public final static Button ButtonDeleteFilmsInMenuMain = new Button("Удалить фильм", "ButtonInstructionInMenuMain");
+    public final static Button ButtonFindFilmsInMenuMain = new Button("Поиск фильма", "ButtonInstructionInMenuMain");
     public final static Button ButtonStylesFilmsFromMenuMainHorrors = new Button("Ужасы", "ButtonStylesFilmsFromMenuMainHorrors");
     public final static Button ButtonStylesFilmsFromMenuMainMystic = new Button("Мистика", "ButtonStylesFilmsFromMenuMainMystic");
     public final static Button ButtonStylesFilmsFromMenuMainHistory = new Button("Исторические", "ButtonStylesFilmsFromMenuMainHistory");
